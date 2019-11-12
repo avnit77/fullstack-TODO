@@ -10,19 +10,32 @@ class TodoApp extends Component {
     async onRender(dom) {
         const header = new Header({ title: 'My Todos' });
         dom.prepend(header.renderDOM());
-        
+
         const main = dom.querySelector('main');
         const error = dom.querySelector('.error');
+
+        const list = new TodoList({
+            updateTodo: updateTodo,
+            removeTodo: removeTodo,
+            todos: [] });
+        main.appendChild(list.renderDOM());
+
+        const add = new AddTodo({
+            addToto: addTodo,
+        });
+        main.appendChild(add.renderDOM());
 
         const loading = new Loading({ loading: true });
         dom.appendChild(loading.renderDOM());
 
+
+
         // initial todo load:
         try {
-            
+            getTodos().then(todos => list.update({ todos }));
         }
         catch (err) {
-            // display error...
+            error.textContent = 'ERROR';
         }
         finally {
             loading.update({ loading: false });
