@@ -3,12 +3,14 @@ const URL = '/api';
 async function fetchWithError(url, options) {
     const response = await fetch(url, options);
     const data = await response.json();
+    console.log(data, 'data');
 
     if (response.ok) {
         return data;
     }
     else {
         throw data.error;
+
     }
 }
 
