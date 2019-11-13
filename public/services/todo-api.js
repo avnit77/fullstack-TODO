@@ -4,6 +4,7 @@ async function fetchWithError(url, options) {
     const response = await fetch(url, options);
     const data = await response.json();
     console.log(data, 'data');
+    console.log(options, 'options');
 
     if (response.ok) {
         return data;

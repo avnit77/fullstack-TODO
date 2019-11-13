@@ -66,7 +66,7 @@ app.put('/api/todos/:id', async (req, res) => {
 
     try {
         const result = await client.query(`
-            UPDATE todo
+            UPDATE todos
             SET complete = $2
             WHERE id = $1
             RETURNING *;
