@@ -15,7 +15,7 @@ class AddTodo extends Component {
                 task: formData.get('new-todo'),
                 complete: false
             };
-
+            console.log (newTodo, 'newTodo');
             try {
                 await addTodo(newTodo);
                 form.reset();

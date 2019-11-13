@@ -60,7 +60,7 @@ class TodoApp extends Component {
         main.appendChild(list.renderDOM());
 
         const add = new AddTodo({
-            onAdd: async newTodo => {
+            addTodo: async newTodo => {
                 loading.update({ loading: true });
                 error.textContent = '';
                 try {
