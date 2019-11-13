@@ -4,13 +4,15 @@ class AddTodo extends Component {
 
     onRender(form) {
         const addTodo = this.props.addTodo;
-        const input = form.querySelector('input');
+        // const input = form.querySelector('input');
 
         form.addEventListener('submit', async event => {
             event.preventDefault();
 
+            const formData = new FormData(form);
+
             const newTodo = {
-                task: input.value,
+                task: formData.get('new-todo'),
                 complete: false
             };
 
