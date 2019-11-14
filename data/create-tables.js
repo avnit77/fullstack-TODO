@@ -13,7 +13,7 @@ async function run() {
         await client.query(`
 
             CREATE TABLE users (
-                is SERIAL PRIMARY KEY,
+                id SERIAL PRIMARY KEY,
                 email VARCHAR(256) NOT NULL,
                 hash VARCHAR(512) NOT NULL
                 display_name VARCHAR(256) NOT NULL

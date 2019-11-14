@@ -14,7 +14,7 @@ async function run() {
             users.map(aysync user => {
                 const result = await client.query(`
                     INSERT INTO users (email, hash, display_name)
-                    VALUES ($1, $2)
+                    VALUES ($1, $2, $3)
                     RETURNING *;
                 `,
                 [user.email, user.hash, user.displayName]);
