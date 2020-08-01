@@ -1,14 +1,17 @@
 module.exports = [
     {
         task: 'Create data tables',
-        complete: true
+        complete: true,
+        userId: 1
     },
     {
         task: 'Backend todo server',
-        complete: false
+        complete: false,
+        userId: 1
     },
     {
         task: 'Frontend todo app',
-        complete: false
+        complete: false,
+        userId: 1
     }
 ];

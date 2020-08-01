@@ -10,19 +10,83 @@ class TodoApp extends Component {
     async onRender(dom) {
         const header = new Header({ title: 'My Todos' });
         dom.prepend(header.renderDOM());
-        
+
         const main = dom.querySelector('main');
         const error = dom.querySelector('.error');
 
         const loading = new Loading({ loading: true });
         dom.appendChild(loading.renderDOM());
 
-        // initial todo load:
+        const list = new TodoList({
+            todos: [],
+            updateTodo: async todo => {
+                loading.update({ loading: true });
+                error.textContent = '';
+
+                try {
+                    const updated = await updateTodo(todo);
+                    const todos = this.state.todos;
+                    const index = todos.indexOf(todo);
+                    todos.splice(index, 1, updated);
+                    list.update({ todos });
+                }
+                catch (err) {
+                    console.log(err);
+                }
+                finally {
+                    loading.update({ loading: false });
+                }
+            },
+            removeTodo: async todo => {
+                loading.update({ loading: true });
+                error.textContent = '';
+
+                try {
+                    await removeTodo(todo);
+                    const todos = this.state.todos;
+                    const index = todos.indexOf(todo);
+                    todos.splice(index, 1);
+                    list.update({ todos });
+                }
+                catch (err) {
+                    console.log(err);
+                }
+                finally {
+                    loading.update({ loading: false });
+                }
+            }
+        });
+
+        main.appendChild(list.renderDOM());
+
+        const add = new AddTodo({
+            addTodo: async newTodo => {
+                loading.update({ loading: true });
+                error.textContent = '';
+                try {
+                    const addedTodo = await addTodo(newTodo);
+                    const todos = this.state.todos;
+                    todos.push(addedTodo);
+                    list.update({ todos });
+                }
+                catch (err) {
+                    error.textContent = err;
+                    throw err;
+                }
+                finally {
+                    loading.update({ loading: false });
+                }
+            }
+        });
+        main.appendChild(add.renderDOM());
+
         try {
-            
+            const todos = await getTodos();
+            this.state.todos = todos;
+            list.update({ todos });
         }
         catch (err) {
-            // display error...
+            error.textContent = 'ERROR';
         }
         finally {
             loading.update({ loading: false });
